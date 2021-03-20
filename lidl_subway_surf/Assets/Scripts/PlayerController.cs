@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,6 +28,8 @@ public class PlayerController : MonoBehaviour
     bool sliding;
     public float slide_jump_down_force; //kvalitní jméno
 
+    [Header("dependencies")]
+    public Animator animator;
     CharacterController cc;
 
     void Start()
@@ -49,6 +54,8 @@ public class PlayerController : MonoBehaviour
         move_vector += Vector3.up * y_velocity * Time.deltaTime; // nahoru
         move_vector += Vector3.left * (transform.position.x - current_lane*lane_offset) * switch_lane_speed * Time.deltaTime; // do strany
         cc.Move(move_vector);
+
+        animator.SetFloat("x_speed", move_vector.x * 20);
     }
 
     void Inputs()
@@ -56,12 +63,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow)) current_lane += 1;
         if (Input.GetKeyDown(KeyCode.LeftArrow)) current_lane -= 1;
         if (Input.GetKeyDown(KeyCode.UpArrow) && grounded) 
-        { 
+        {
+            animator.SetTrigger("jump");
             y_velocity = jump_force;
             real_slide_time = 0;
         }
         if (Input.GetKeyDown(KeyCode.DownArrow)) 
         {
+            animator.SetTrigger("slide");
             y_velocity = -1 * slide_jump_down_force;
             cc.height = collider_size;
             cc.center = new Vector3(0, collider_size/2, 0);
@@ -83,5 +92,11 @@ public class PlayerController : MonoBehaviour
     static float Sign(float number)
     {
         return number < 0 ? -1 : (number > 0 ? 1 : 0);
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Debug.DrawRay(hit.point, hit.normal * 5, Color.red);
+        if (hit.normal.y < 0.5f) SceneManager.LoadScene(0);
     }
 }
