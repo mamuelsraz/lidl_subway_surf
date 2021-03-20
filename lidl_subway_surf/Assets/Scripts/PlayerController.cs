@@ -31,10 +31,12 @@ public class PlayerController : MonoBehaviour
     [Header("dependencies")]
     public Animator animator;
     CharacterController cc;
+    SwipeManager swipe_input;
 
     void Start()
     {
         cc = GetComponent<CharacterController>();
+        swipe_input = GetComponent<SwipeManager>();
         current_lane = 0;
         y_velocity = 0;
     }
@@ -60,15 +62,15 @@ public class PlayerController : MonoBehaviour
 
     void Inputs()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow)) current_lane += 1;
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) current_lane -= 1;
-        if (Input.GetKeyDown(KeyCode.UpArrow) && grounded) 
+        if (Input.GetKeyDown(KeyCode.RightArrow) || swipe_input.SwipeRight) current_lane += 1;
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || swipe_input.SwipeLeft) current_lane -= 1;
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || swipe_input.SwipeUp) && grounded) 
         {
             animator.SetTrigger("jump");
             y_velocity = jump_force;
             real_slide_time = 0;
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow)) 
+        if (Input.GetKeyDown(KeyCode.DownArrow) || swipe_input.SwipeDown)
         {
             animator.SetTrigger("slide");
             y_velocity = -1 * slide_jump_down_force;
@@ -87,11 +89,6 @@ public class PlayerController : MonoBehaviour
             cc.center = new Vector3(0, 0.5f, 0);
         }
         real_slide_time -= Time.deltaTime;
-    }
-
-    static float Sign(float number)
-    {
-        return number < 0 ? -1 : (number > 0 ? 1 : 0);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)

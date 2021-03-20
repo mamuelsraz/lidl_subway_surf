@@ -63,7 +63,7 @@ public class SwipeManager : MonoBehaviour
         }
 
         //Did we cross the distance?
-        if (swipeDelta.magnitude > 125)
+        if (swipeDelta.magnitude > 50)
         {
             //Which direction?
             float x = swipeDelta.x;
@@ -86,11 +86,6 @@ public class SwipeManager : MonoBehaviour
             }
             Reset();
         }
-
-        if (swipeLeft) Debug.Log("left");
-        if (swipeRight) Debug.Log("right");
-        if (swipeUp) Debug.Log("up");
-        if (swipeDown) Debug.Log("down");
     }
 
     void Reset()
