@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("running")]
     public float speed;
+    public float speed_multiplier_over_time;
     public float switch_lane_speed;
     public float lane_offset;
     public int lane_count; //na každou stranu
@@ -43,14 +44,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        grounded = Physics.CheckSphere(transform.position, 0.25f, ~ignoreMe); //fuj
+        grounded = Physics.CheckSphere(transform.position, 1f, ~ignoreMe); //fuj
+        speed += speed_multiplier_over_time * Time.deltaTime;
 
         Inputs();
         Slide();
 
         current_lane = Mathf.Clamp(current_lane, -1 * lane_count, lane_count);
         y_velocity -= gravity * Time.deltaTime;
-        if (grounded && y_velocity <= 0) y_velocity = -0.1f;
+        if (grounded && y_velocity <= 0) y_velocity = -5f;
 
         Vector3 move_vector = Vector3.forward * speed * Time.deltaTime; //dopredu
         move_vector += Vector3.up * y_velocity * Time.deltaTime; // nahoru
@@ -66,6 +68,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow) || swipe_input.SwipeLeft) current_lane -= 1;
         if ((Input.GetKeyDown(KeyCode.UpArrow) || swipe_input.SwipeUp) && grounded) 
         {
+            Debug.Log("yes");
             animator.SetTrigger("jump");
             y_velocity = jump_force;
             real_slide_time = 0;
@@ -79,6 +82,8 @@ public class PlayerController : MonoBehaviour
             real_slide_time = slide_time;
             sliding = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.R)) SceneManager.LoadScene(0);
     }
 
     void Slide()
@@ -94,6 +99,6 @@ public class PlayerController : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         Debug.DrawRay(hit.point, hit.normal * 5, Color.red);
-        if (hit.normal.y < 0.5f) SceneManager.LoadScene(0);
+        if (hit.normal.y < 0.4f) SceneManager.LoadScene(0);
     }
 }
