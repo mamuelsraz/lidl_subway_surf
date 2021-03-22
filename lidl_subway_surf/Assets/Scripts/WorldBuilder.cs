@@ -12,7 +12,7 @@ public class WorldBuilder : MonoBehaviour
 
     //clanky
     Object[] tiles;
-    float current_tile_distance = 0;
+    float current_tile_distance = 50;
     Vector3 last_tile = Vector3.one;
 
     public Transform player;
@@ -32,7 +32,6 @@ public class WorldBuilder : MonoBehaviour
             current_distance++;
             new_world_tile.gameObject.AddComponent<DestroyDistance>().distance = see_distance*1.5f;
             new_world_tile.gameObject.GetComponent<DestroyDistance>().player = player;
-            Debug.Log(current_distance);
         }
 
         if (player.transform.position.z + see_distance >current_tile_distance)
