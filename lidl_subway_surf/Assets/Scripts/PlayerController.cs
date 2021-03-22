@@ -33,6 +33,12 @@ public class PlayerController : MonoBehaviour
     bool sliding;
     public float slide_jump_down_force; //kvalitní jméno
 
+    [Header("audio")]
+    public AudioSource jump;
+    public AudioSource slide;
+    public AudioSource die;
+    public AudioSource move;
+
     [Header("dependencies")]
     public Animator animator;
     public Text score_text;
@@ -79,14 +85,15 @@ public class PlayerController : MonoBehaviour
 
     void Inputs()
     {
-        if (Input.GetKeyDown(KeyCode.RightArrow) || swipe_input.SwipeRight) current_lane += 1;
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || swipe_input.SwipeLeft) current_lane -= 1;
+        if (Input.GetKeyDown(KeyCode.RightArrow) || swipe_input.SwipeRight) { current_lane += 1; move.Play(); }
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || swipe_input.SwipeLeft) { current_lane -= 1; move.Play(); }
         if ((Input.GetKeyDown(KeyCode.UpArrow) || swipe_input.SwipeUp) && grounded)
         {
             Debug.Log("yes");
             animator.SetTrigger("jump");
             y_velocity = jump_force;
             real_slide_time = 0;
+            jump.Play();
         }
         if (Input.GetKeyDown(KeyCode.DownArrow) || swipe_input.SwipeDown)
         {
@@ -96,6 +103,7 @@ public class PlayerController : MonoBehaviour
             cc.center = new Vector3(0, collider_size / 2, 0);
             real_slide_time = slide_time;
             sliding = true;
+            slide.Play();
         }
 
         if (Input.GetKeyDown(KeyCode.R)) Die();
@@ -116,7 +124,8 @@ public class PlayerController : MonoBehaviour
         if (other.transform.CompareTag("Coin"))
         {
             coin_count += 1;
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<AudioSource>().Play();
+            Destroy(other.gameObject, 0.1f);
         }
     }
 
@@ -153,5 +162,6 @@ public class PlayerController : MonoBehaviour
         die_ui.SetActive(true);
         play_ui.SetActive(false);
         pause_ui.SetActive(false);
+        die.Play();
     }
 }
