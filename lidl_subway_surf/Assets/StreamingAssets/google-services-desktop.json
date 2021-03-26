@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1001615862406",
+    "project_id": "lidl-leaderboard",
+    "storage_bucket": "lidl-leaderboard.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001615862406:android:c0d6b3b5e71a8afde43f07",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.lidlsubwaysurf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001615862406-is19986san6n5m3klta17bhs9ip7j5n3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvIVFUWO4Ijmnffo65sUQvN4ideXKcGgo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001615862406-is19986san6n5m3klta17bhs9ip7j5n3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

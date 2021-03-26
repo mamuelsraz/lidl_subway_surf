@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class TileScript : MonoBehaviour
 {
-    public float distance;
+    public float distance = 200;
     public Vector3 start = Vector3.one;
     public Vector3 end = Vector3.one;
 
-    void Start()
-    {
-        
-    }
+    public WorldBuilder wb;
+    public Transform player;
 
     void Update()
     {
-        
+        if (Vector3.Distance(player.position, transform.position) > distance) wb.Reset_tile(gameObject);
     }
 
     private void OnDrawGizmos()

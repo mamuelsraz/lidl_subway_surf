@@ -6,6 +6,7 @@ public class DestroyDistance : MonoBehaviour
 {
     public float distance;
     public Transform player;
+    public WorldBuilder wb;
 
     void Start()
     {

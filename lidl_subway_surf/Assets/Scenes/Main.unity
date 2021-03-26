@@ -1189,6 +1189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff3f70b59b73014b97cf3dc9213d937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pool_size: 1
   world_tile_size: 200
   see_distance: 300
   player: {fileID: 215669012}
@@ -1649,6 +1650,8 @@ MonoBehaviour:
   distance: 0
   start: {x: 1, y: 1, z: 1}
   end: {x: 1, y: 1, z: 1}
+  wb: {fileID: 0}
+  player: {fileID: 0}
 --- !u!4 &1187977491
 Transform:
   m_ObjectHideFlags: 0
