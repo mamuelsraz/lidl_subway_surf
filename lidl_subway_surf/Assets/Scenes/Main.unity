@@ -121,6 +121,134 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &78069534
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 78069535}
+  - component: {fileID: 78069536}
+  m_Layer: 8
+  m_Name: coin sound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &78069535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78069534}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 215669012}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &78069536
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78069534}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 577143e859ae1a948be7a06e29e0b5a5,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 51b833f39b952ee4bb8c05c9a5dee579, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &82928570
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,6 +411,7 @@ GameObject:
   m_Component:
   - component: {fileID: 215669012}
   - component: {fileID: 215669014}
+  - component: {fileID: 215669017}
   - component: {fileID: 215669013}
   - component: {fileID: 215669015}
   - component: {fileID: 215669016}
@@ -309,6 +438,7 @@ Transform:
   - {fileID: 1852764260}
   - {fileID: 1478123866}
   - {fileID: 1870002617}
+  - {fileID: 78069535}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -329,6 +459,7 @@ MonoBehaviour:
   switch_lane_speed: 7
   lane_offset: 5
   lane_count: 1
+  move_vector: {x: 0, y: 0, z: 0}
   jump_force: 25
   gravity: 70
   grounded: 0
@@ -338,15 +469,77 @@ MonoBehaviour:
   collider_size: 0.05
   slide_time: 1
   slide_jump_down_force: 20
-  jump: {fileID: 215669016}
-  slide: {fileID: 1852764261}
-  die: {fileID: 1478123867}
-  move: {fileID: 1870002618}
-  animator: {fileID: 2135071156}
+  e_change_lane:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 215669017}
+        m_MethodName: Move
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  e_jump:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 215669017}
+        m_MethodName: Jump
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  e_slide:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 215669017}
+        m_MethodName: Slide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  e_die:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 215669017}
+        m_MethodName: Die
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  e_pick_up_coin:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 215669017}
+        m_MethodName: Pick_up_coin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   score_text: {fileID: 1649044938}
-  pause_ui: {fileID: 300632208}
-  play_ui: {fileID: 593741099}
-  die_ui: {fileID: 560270840}
 --- !u!143 &215669014
 CharacterController:
   m_ObjectHideFlags: 0
@@ -474,6 +667,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &215669017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215669011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cbd5e8bd24bad447b24609b8428416f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jump: {fileID: 215669016}
+  slide: {fileID: 1852764261}
+  die: {fileID: 1478123867}
+  move: {fileID: 1870002618}
+  coin: {fileID: 78069536}
+  animator: {fileID: 2135071156}
+  score_text: {fileID: 1649044938}
+  pause_ui: {fileID: 300632208}
+  play_ui: {fileID: 593741099}
+  die_ui: {fileID: 560270840}
 --- !u!4 &230204011 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1953894370004604844, guid: 87fb43bc82f1b5f46a6518644a9694a6,
@@ -1386,7 +1601,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 215669013}
+      - m_Target: {fileID: 215669017}
         m_MethodName: UnPause
         m_Mode: 1
         m_Arguments:
@@ -1751,7 +1966,7 @@ GameObject:
   - component: {fileID: 1478123866}
   - component: {fileID: 1478123867}
   m_Layer: 8
-  m_Name: slide sound (1)
+  m_Name: ' die sound'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1949,7 +2164,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 215669013}
+      - m_Target: {fileID: 215669017}
         m_MethodName: Reset
         m_Mode: 1
         m_Arguments:
@@ -2350,7 +2565,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 215669013}
+      - m_Target: {fileID: 215669017}
         m_MethodName: Pause
         m_Mode: 1
         m_Arguments:
@@ -2409,7 +2624,7 @@ GameObject:
   - component: {fileID: 1870002617}
   - component: {fileID: 1870002618}
   m_Layer: 8
-  m_Name: slide sound (2)
+  m_Name: move sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
