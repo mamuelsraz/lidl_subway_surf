@@ -89,7 +89,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow) || swipe_input.SwipeLeft) { current_lane -= 1; move.Play(); }
         if ((Input.GetKeyDown(KeyCode.UpArrow) || swipe_input.SwipeUp) && grounded)
         {
-            Debug.Log("yes");
             animator.SetTrigger("jump");
             y_velocity = jump_force;
             real_slide_time = 0;

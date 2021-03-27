@@ -13,7 +13,7 @@ public class TileScript : MonoBehaviour
 
     void Update()
     {
-        if (Vector3.Distance(player.position, transform.position) > distance) wb.Reset_tile(gameObject);
+        if (transform.position.z + distance < player.position.z) wb.Reset_tile(this);
     }
 
     private void OnDrawGizmos()

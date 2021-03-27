@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 13359221720305743}
   - component: {fileID: 13359221720305742}
   m_Layer: 0
-  m_Name: tile00 (1)
+  m_Name: tile1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,6 +54,8 @@ MonoBehaviour:
   distance: 40
   start: {x: 0, y: 1, z: 0}
   end: {x: 1, y: 0, z: 0}
+  wb: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1001 &13359221364933818
 PrefabInstance:
   m_ObjectHideFlags: 0

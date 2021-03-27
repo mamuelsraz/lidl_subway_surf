@@ -7,16 +7,16 @@ public class WorldBuilder : MonoBehaviour
 {
     //object pooling
     public int pool_size;
-    GameObject[,] map_pool;
-    GameObject[,] tile_pool;
+    TileScript[,] map_pool;
+    TileScript[,] tile_pool;
 
     //mapa
     public float world_tile_size;
     public float see_distance;
-    int current_distance = 0;
+    float current_distance = 0;
 
     //clanky
-    float current_tile_distance = 50;
+    float current_tile_distance = 70;
     Vector3 last_tile = Vector3.one;
 
     public Transform player;
@@ -25,8 +25,8 @@ public class WorldBuilder : MonoBehaviour
     {
         GameObject[] map_types = Resources.LoadAll<GameObject>("Map");
         GameObject[] tile_types = Resources.LoadAll<GameObject>("Tiles");
-        Inicialize_tiles(ref map_pool, map_types, pool_size);
-        Inicialize_tiles(ref tile_pool, tile_types, pool_size);
+        map_pool = Inicialize_tiles(map_types, pool_size);
+        tile_pool = Inicialize_tiles(tile_types, pool_size);
     }
 
     /*void Update2()
@@ -64,56 +64,66 @@ public class WorldBuilder : MonoBehaviour
 
     private void Update()
     {
-        if (player.transform.position.z + see_distance > current_distance * world_tile_size)
+        if (player.transform.position.z + see_distance > current_distance)
         {
-            Spawn_map();
+            Vector3 troughput = Vector3.one;
+            Spawn(map_pool, ref troughput, ref current_distance);
         }
 
         if (player.transform.position.z + see_distance > current_tile_distance)
         {
-            //spawn tile
+            Spawn(tile_pool, ref last_tile, ref current_tile_distance);
         }
     }
 
-    void Spawn_map()
+    void Spawn(TileScript[,] pool, ref Vector3 last_tile, ref float distance)
     {
         for (int i = 0; i < 200; i++)
         {
-            GameObject potentional_tile = map_pool[Random.Range(0, map_pool.GetLength(0)), Random.Range(0, map_pool.GetLength(1))];
-
-            if (!potentional_tile.activeSelf)
+            TileScript potentional_tile = pool[Random.Range(0, pool.GetLength(0)), Random.Range(0, pool.GetLength(1))];
+            Vector3 tile_pass = potentional_tile.start;
+            if (!potentional_tile.gameObject.activeSelf && (tile_pass.x * last_tile.x == 1 || tile_pass.y * last_tile.y == 1 || tile_pass.y * last_tile.y == 1))
             {
-                potentional_tile.transform.position = Vector3.forward * current_distance * world_tile_size;
-                current_distance++;
-                potentional_tile.SetActive(true);
+                potentional_tile.transform.position = Vector3.forward * (distance + potentional_tile.distance/2);
+                distance += potentional_tile.distance;
+                potentional_tile.gameObject.SetActive(true);
+                last_tile = potentional_tile.end;
                 break;
             }
         }
     }
 
-    void Inicialize_tiles(ref GameObject[,] pool, GameObject[] pool_parts, int pool_size)
+    TileScript[,] Inicialize_tiles(GameObject[] pool_parts, int pool_size)
     {
-        pool = new GameObject[pool_parts.Length, pool_size];
+        TileScript[,] pool = new TileScript[pool_parts.Length, pool_size];
         for (int i = 0; i < pool.GetLength(0); i++)
         {
             for (int ii = 0; ii < pool.GetLength(1); ii++)
             {
-                GameObject obj = Instantiate(pool_parts[i], transform);
-                pool[i, ii] = obj;
-                Reset_tile(obj);
-                if (obj.GetComponent<TileScript>() == null)
-                {
-                    TileScript script = obj.AddComponent<TileScript>();
-                    script.player = player;
-                    script.wb = this;
-                    script.distance = see_distance * 1.5f;
-                }
+                pool[i, ii] = Inicialize_tile(Instantiate(pool_parts[i], transform));
             }
         }
+        return pool;
+    }
+    TileScript Inicialize_tile(GameObject new_tile)
+    {
+        TileScript script = new_tile.GetComponent<TileScript>();
+        if (script == null)
+        {
+            script = new_tile.AddComponent<TileScript>();
+            script.distance = 200;
+            script.end = Vector3.one;
+            script.start = Vector3.one;
+        }
+        script.player = player;
+        script.wb = this;
+
+        Reset_tile(script);
+        return script;
     }
 
-    public void Reset_tile(GameObject obj)
+    public void Reset_tile(TileScript obj)
     {
-        obj.SetActive(false);
+        obj.gameObject.SetActive(false);
     }
 }
