@@ -24,14 +24,19 @@ public class SetAudioParameter : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Start()
     {
-        Parameter = slider.value;
+        slider.onValueChanged.AddListener(ChangeAudio);
     }
 
-    /*public void ChangeAudio(float f)
+    /*private void Update()
+    {
+        Parameter = slider.value;
+    }*/
+
+    public void ChangeAudio(float f)
     {
         Parameter = f;
         Debug.Log(f);
-    }*/
+    }
 }

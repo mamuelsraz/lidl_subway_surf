@@ -125,5 +125,9 @@ public class WorldBuilder : MonoBehaviour
     public void Reset_tile(TileScript obj)
     {
         obj.gameObject.SetActive(false);
+        foreach (Transform item in obj.transform)
+        {
+            item.gameObject.SetActive(true);
+        }
     }
 }
