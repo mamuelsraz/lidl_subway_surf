@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class SceneController : MonoBehaviour
 {
     float score = 0;
     int coin_count = 0;
+    public float coin_weight = 20f;
 
     [Header("audio")]
     public AudioSource jump;
@@ -23,6 +26,7 @@ public class SceneController : MonoBehaviour
     public GameObject play_ui;
     public GameObject die_ui;
     PlayerController controller;
+    public Backend backend;
 
     private void Start()
     {
@@ -39,7 +43,7 @@ public class SceneController : MonoBehaviour
         animator.SetFloat("x_speed", controller.move_vector.x * 20);
 
         score += Mathf.Round(transform.position.z / 2) - score;//¯\_(ツ)_/¯
-        score_text.text = $"score: {score + coin_count * 20}";
+        score_text.text = $"score: {score + coin_count * coin_weight}";
     }
 
     public void Jump()
@@ -63,6 +67,9 @@ public class SceneController : MonoBehaviour
         die_ui.SetActive(true);
         play_ui.SetActive(false);
         pause_ui.SetActive(false);
+
+
+        backend.show_stats(Mathf.RoundToInt(score + coin_count * coin_weight));
     }
 
     public void Pick_up_coin()
@@ -89,7 +96,7 @@ public class SceneController : MonoBehaviour
 
     public void Reset()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
     #endregion
 

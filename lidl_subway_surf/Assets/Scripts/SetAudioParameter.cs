@@ -33,7 +33,6 @@ public class SetAudioParameter : MonoBehaviour
         slider.value = Load();
         mixer.SetFloat(parameterName, slider.value);
         ChangeAudio(slider.value);
-        Debug.Log(overall_path);
     }
 
     /*private void Update()
