@@ -94,9 +94,9 @@ public class SceneController : MonoBehaviour
         pause_ui.SetActive(false);
     }
 
-    public void Reset()
+    public void Reset(int scene = 1)
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(scene);
     }
     #endregion
 
